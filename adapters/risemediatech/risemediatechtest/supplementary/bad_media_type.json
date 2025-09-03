@@ -6,7 +6,9 @@
         "id": "test-imp-id",
         "ext": {
           "bidder": {
-            "bidfloor": 1.0
+            "bidfloor": 1.0,
+            "sspId": "test-ssp-id",
+            "siteId": "test-site-id"
           }
         }
       }

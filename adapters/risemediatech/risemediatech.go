@@ -25,6 +25,8 @@ func (a *adapter) MakeRequests(request *openrtb2.BidRequest, reqInfo *adapters.E
 	var errs []error
 	var validImps []openrtb2.Imp
 	var setTestMode bool
+	var sspId string
+	var siteId string
 
 	for imp := range iterutil.SlicePointerValues(request.Imp) {
 		impExt, err := parseImpExt(imp.Ext)
@@ -59,6 +61,15 @@ func (a *adapter) MakeRequests(request *openrtb2.BidRequest, reqInfo *adapters.E
 			setTestMode = true
 		}
 
+		// Store sspId and siteId for later use in BidRequest.ext
+		if impExt.SspId != "" {
+			sspId = impExt.SspId
+		}
+
+		if impExt.SiteId != "" {
+			siteId = impExt.SiteId
+		}
+
 		validImps = append(validImps, *imp)
 	}
 
@@ -70,6 +81,43 @@ func (a *adapter) MakeRequests(request *openrtb2.BidRequest, reqInfo *adapters.E
 	modifiedRequest.Imp = validImps
 	if setTestMode {
 		modifiedRequest.Test = 1
+	}
+
+	// Add testMode, sspId, and siteId to BidRequest.ext
+	if setTestMode || sspId != "" || siteId != "" {
+		var extMap map[string]interface{}
+		if modifiedRequest.Ext != nil {
+			if err := jsonutil.Unmarshal(modifiedRequest.Ext, &extMap); err != nil {
+				extMap = make(map[string]interface{})
+			}
+		} else {
+			extMap = make(map[string]interface{})
+		}
+
+		risemediatechMap, ok := extMap["risemediatech"].(map[string]interface{})
+		if !ok {
+			risemediatechMap = make(map[string]interface{})
+			extMap["risemediatech"] = risemediatechMap
+		}
+
+		if setTestMode {
+			risemediatechMap["testMode"] = 1
+		}
+
+		if sspId != "" {
+			risemediatechMap["sspId"] = sspId
+		}
+
+		if siteId != "" {
+			risemediatechMap["siteId"] = siteId
+		}
+
+		updatedExt, err := jsonutil.Marshal(extMap)
+		if err != nil {
+			errs = append(errs, &errortypes.BadInput{Message: fmt.Sprintf("error marshaling request.ext: %v", err)})
+		} else {
+			modifiedRequest.Ext = updatedExt
+		}
 	}
 
 	reqJSON, err := jsonutil.Marshal(modifiedRequest)

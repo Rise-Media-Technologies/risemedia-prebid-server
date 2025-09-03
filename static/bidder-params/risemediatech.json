@@ -12,6 +12,14 @@
       "type": "integer",
       "enum": [0, 1],
       "description": "Test Mode parameter to indicate test request"
+    },
+    "sspId": {
+      "type": "string",
+      "description": "SSP ID parameter for RiseMediaTech"
+    },
+    "siteId": {
+      "type": "string",
+      "description": "Site ID parameter for RiseMediaTech"
     }
   },
   "additionalProperties": false,

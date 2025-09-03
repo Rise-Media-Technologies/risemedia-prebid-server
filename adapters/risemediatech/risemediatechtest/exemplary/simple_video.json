@@ -9,6 +9,14 @@
       "id": "1",
       "bundle": "com.risemediatech.videotestapp"
     },
+    "ext": {
+      "risemediatech": {
+        "testMode": 1,
+        "sspId": "video-ssp-id",
+        "siteId": "video-site-id"
+      }
+    },
+    "test": 1,
     "imp": [
       {
         "id": "test-imp-id",
@@ -21,8 +29,7 @@
         },
         "ext": {
           "bidder": {
-            "bidfloor": 0.75,
-            "testMode": 1
+            "bidfloor": 0.75
           }
         }
       }
@@ -55,13 +62,19 @@
               "bidfloor": 0.75,
               "ext": {
                 "bidder": {
-                  "bidfloor": 0.75,
-                  "testMode": 1
+                  "bidfloor": 0.75
                 }
               }
             }
           ],
-          "test": 1
+          "test": 1,
+          "ext": {
+            "risemediatech": {
+              "testMode": 1,
+              "sspId": "video-ssp-id",
+              "siteId": "video-site-id"
+            }
+          }
         },
         "impIDs": ["test-imp-id"]
       },
