@@ -19,9 +19,14 @@
               {
                 "id": "1",
                 "banner": { "w": 300, "h": 250 },
-                "ext": { "bidder": { "placementId": "abc", "testMode": 0 } }
+                "ext": { "bidder": { "placementId": "abc" } }
               }
-            ]
+            ],
+            "ext": {
+              "risemediatech": {
+                "testMode": 0
+              }
+            }
           },
           "impIDs": ["1"]
         },

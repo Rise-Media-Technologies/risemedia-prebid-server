@@ -1,11 +1,17 @@
 {
   "mockBidRequest": {
     "id": "test-test-mode-set",
+    "ext": {
+      "risemediatech": {
+        "testMode": 1
+      }
+    },
+    "test": 1,
     "imp": [
       {
         "id": "1",
         "banner": { "w": 300, "h": 250 },
-        "ext": { "bidder": { "placementId": "abc", "testMode": 1 } }
+        "ext": { "bidder": { "placementId": "abc" } }
       }
     ]
   },
@@ -19,10 +25,15 @@
             {
               "id": "1",
               "banner": { "w": 300, "h": 250 },
-              "ext": { "bidder": { "placementId": "abc", "testMode": 1 } }
+              "ext": { "bidder": { "placementId": "abc" } }
             }
           ],
-          "test": 1
+          "test": 1,
+          "ext": {
+            "risemediatech": {
+              "testMode": 1
+            }
+          }
         },
         "impIDs": ["1"]
       },

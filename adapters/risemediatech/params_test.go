@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/prebid/prebid-server/v3/openrtb_ext"
-	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestValidParams(t *testing.T) {
@@ -19,6 +19,9 @@ func TestValidParams(t *testing.T) {
 	}{
 		{"Valid bidfloor only", `{"bidfloor": 0.01}`},
 		{"Valid bidfloor with testMode", `{"bidfloor": 2.5, "testMode": 1}`},
+		{"Valid with sspId", `{"bidfloor": 0.01, "sspId": "ssp-123"}`},
+		{"Valid with siteId", `{"bidfloor": 0.01, "siteId": "site-456"}`},
+		{"Valid with all params", `{"bidfloor": 0.01, "testMode": 1, "sspId": "ssp-123", "siteId": "site-456"}`},
 	}
 
 	for _, tt := range tests {
@@ -40,6 +43,8 @@ func TestInvalidParams(t *testing.T) {
 		{"Invalid testMode type", `{"testMode": "yes"}`},
 		{"Negative bidfloor", `{"bidfloor": -5}`},
 		{"Invalid testMode value", `{"testMode": 9999}`},
+		{"Invalid sspId type", `{"sspId": 123}`},
+		{"Invalid siteId type", `{"siteId": 456}`},
 	}
 
 	for _, tt := range tests {
@@ -48,4 +53,3 @@ func TestInvalidParams(t *testing.T) {
 		})
 	}
 }
-
